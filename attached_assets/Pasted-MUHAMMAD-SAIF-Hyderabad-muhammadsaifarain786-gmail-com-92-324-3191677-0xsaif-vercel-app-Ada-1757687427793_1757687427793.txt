@@ -1,0 +1,72 @@
+MUHAMMAD SAIF
+Hyderabad | muhammadsaifarain786@gmail.com | +92 324 3191677 | 0xsaif.vercel.app
+Adaptable web developer skilled in collaborating with teams to deliver high-impact digital projects. Track
+record of managing end-to-end website development, ensuring on-time launch and client satisfaction.
+Skilled in prioritizing user needs and delivering engaging, seamless web experiences. Focused on driving
+project success through effective communication and strategic planning.
+SUMMARY
+WORK EXPERIENCE
+Backend Python Developer Intern Jun 2025 - Aug 2025
+ATechSquare (Remote)
+Built real-time backend features with Django, Channels, and WebSockets.
+Implemented secure authentication (OTP, password reset, email verification).
+Integrated Celery + Redis for background tasks and async processing.
+Developed REST APIs for recording, attendance, and whiteboard management.
+Synced with Google Calendar, added payment gateways, and enforced role-based permissions.
+Frontend Developer Intern Aug 2025 - Ongoing
+Elevvo Pathways (Remote)
+ompleted 8 development tasks in 1 month, demonstrating problem-solving and time management.
+Built responsive web interfaces, improving usability and cross-device performance.
+Applied clean code and optimizations, cutting load time by 20%+.
+Delivered features on tight deadlines with 100% on-time completion.
+Collaborated in an Agile workflow to achieve project goals efficiently.
+Web Developer Intern Jul 2025 - Aug 2025
+NextGenLearners (Remote)
+Completed a 1-month internship focused on real-world web development projects.
+Gained hands-on experience with modern technologies and industry best practices.
+Delivered solutions aligned with client requirements and business goals.
+Enhanced ability to build practical, production-ready applications.
+BS Software Engineering Jan 2023 - Ongoing
+University of Sindh, Jamshoro
+GPA: 3.29, Relevant Coursework: Data Structures & Algorithms, Web Development, Database
+Management Systems, Software Engineering
+EDUCATION
+Languages
+Tools/Frameworks
+Databases
+Other Skills
+Typescript, Javascript, C++, Python, SQL.
+React, Nextjs, Nodejs, Django, Framer, Gsap, Other CSS Libraries.
+Mongodb, MySQL, PostgresSQL, Supabase, Oracle.
+System Design, Deployment, Basic SEO, Speed Optimization, Project
+Management.
+SKILLS
+Algorithms By Stanford University Online Sept 2024
+CERTIFICATES
+Divide & Conquer, Sorting, Searching and Randomized Algorithms
+Graph Search, Shortest Paths, and Data Structures
+PROJECTS
+Garaj Cloud Landing Page 2025
+HTML, CSS, Javascript, Gsap
+Implemented a responsive and high-performance landing page for a mobile security platform,
+highlighting key features such as containerization, secure boot, and advanced authentication.
+Enhanced UI/UX and optimized performance reduced load time by 40% while improving visitor-tosignup conversion by 25%, driving stronger engagement and brand credibility.
+Donations for Palestine 2025
+Nextjs, Typescript, Tailwindcss
+Built a donation platform that connected 5,000+ users to verified charities, increasing transparency
+and accelerating support for Gaza.
+Kipay App Admin Panel 2025
+Reactjs, Tailwindcss
+Engineered a responsive and modern admin panel for the Kipay app, featuring intuitive UI components
+to manage users, transactions, and analytics. Optimized for scalability and cross-device compatibility,
+the panel streamlined operations and improved administrative efficiency by 35%.
+Getmealassi (Patreon Clone) 2025
+Nextjs, Typescript, Tailwindcss, Stripe
+Architected a creator-focused crowdfunding platform with secure payment integration and a clean,
+user-friendly interface. Enhanced monetization opportunities for creators, increasing audience support
+transactions by 30% and improving platform engagement through streamlined user flows.
+Karlobaat (Chatting App) 2024
+MERN Stack, Socket IO, MUI, Framer
+Designed KarloBaat, a real-time chat application with a feature-rich design for seamless
+communication. Implemented instant messaging, responsive UI, and interactive features that
+improved user engagement by 40% and enhanced overall messaging experience across devices
