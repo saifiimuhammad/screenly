@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
+import pdfParse from "pdf-parse";
+import mammoth from "mammoth";
 
 export interface ParsedDocument {
   text: string;
@@ -27,31 +29,52 @@ export async function parseDocument(filePath: string, mimeType: string): Promise
 }
 
 async function parsePDF(filePath: string): Promise<ParsedDocument> {
-  // For now, return a basic implementation
-  // In production, you'd use pdf-parse or similar library
   const stats = fs.statSync(filePath);
-  return {
-    text: "PDF parsing not fully implemented - please use text input",
-    metadata: {
-      fileName: path.basename(filePath),
-      fileSize: stats.size,
-      mimeType: "application/pdf"
+  const dataBuffer = fs.readFileSync(filePath);
+  
+  try {
+    const data = await pdfParse(dataBuffer);
+    const text = data.text.trim();
+    
+    if (!text || text.length < 10) {
+      throw new Error("No readable text found in PDF file");
     }
-  };
+    
+    return {
+      text,
+      metadata: {
+        fileName: path.basename(filePath),
+        fileSize: stats.size,
+        mimeType: "application/pdf"
+      }
+    };
+  } catch (error) {
+    throw new Error(`Failed to parse PDF: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
 }
 
 async function parseDOCX(filePath: string): Promise<ParsedDocument> {
-  // For now, return a basic implementation
-  // In production, you'd use mammoth or similar library
   const stats = fs.statSync(filePath);
-  return {
-    text: "DOCX parsing not fully implemented - please use text input",
-    metadata: {
-      fileName: path.basename(filePath),
-      fileSize: stats.size,
-      mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  
+  try {
+    const result = await mammoth.extractRawText({ path: filePath });
+    const text = result.value.trim();
+    
+    if (!text || text.length < 10) {
+      throw new Error("No readable text found in DOCX file");
     }
-  };
+    
+    return {
+      text,
+      metadata: {
+        fileName: path.basename(filePath),
+        fileSize: stats.size,
+        mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      }
+    };
+  } catch (error) {
+    throw new Error(`Failed to parse DOCX: ${error instanceof Error ? error.message : "Unknown error"}`);
+  }
 }
 
 async function parseText(filePath: string): Promise<ParsedDocument> {
