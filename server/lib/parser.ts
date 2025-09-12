@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import pdfParse from "pdf-parse";
+// Import pdf-parse dynamically to avoid startup issues
+// import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 
 export interface ParsedDocument {
@@ -33,6 +34,8 @@ async function parsePDF(filePath: string): Promise<ParsedDocument> {
   const dataBuffer = fs.readFileSync(filePath);
   
   try {
+    // Dynamic import to avoid startup issues
+    const pdfParse = (await import("pdf-parse")).default;
     const data = await pdfParse(dataBuffer);
     const text = data.text.trim();
     
