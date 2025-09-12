@@ -1,0 +1,82 @@
+System: You are a senior frontend + backend engineer. You will generate a production-ready Next.js 14+ app (app/ router), TypeScript, Tailwind CSS, minimal code, that implements an AI Resume Analyzer. The app must:
+
+1. Project goals
+   - Allow users to upload a PDF or DOCX resume (drag & drop) and plain text paste.
+   - Parse the resume into structured fields (name, title, contact, skills, experience, education, projects, certifications).
+   - Provide an automated ATS score (0-100) with short bullet suggestions to improve resumes.
+   - Provide role-fit analysis for a selected job description (user pastes JD).
+   - Provide short, copy-ready bullet improvements for each work item.
+   - Allow export of final annotated resume as PDF and copy suggestions to clipboard.
+
+2. Tech stack & constraints
+   - Next.js (app router), TypeScript, Tailwind CSS.
+   - All AI calls go to Gemini via a Server API route (no client-side API key).
+   - Use **exactly 10 KendoReact Free components** for UI widgets (see list below). Use their accessible markup and responsive features.
+   - Keep UI code minimal and modular. No heavy state libs — use React context or React Query only if needed.
+   - Minimize dependencies. Use official KendoReact packages for only components used.
+   - Provide clear error handling, skeleton loaders, and a progress bar for uploads.
+   - Make UI "sexy" — modern cards, big readable fonts, subtle motion, generous spacing, soft rounded corners, clear CTAs.
+   - Make code production-ready: types, small utility functions, environment variables, CORS safe, and basic input validation.
+
+3. UI & UX requirements (style + behavior)
+   - Clean single-page flow: Upload → Parse (progress) → Review (sections with editable fields) → Score & Suggestions → Export.
+   - Use a dark+accent theme with soft gradients, large headings, and 2xl rounded cards.
+   - Accessible: keyboard focus, aria labels, and screen-reader friendly.
+   - Provide copy button next to each suggestion and an "Apply suggestion" quick-edit feature.
+
+4. API & Gemini integration
+   - Provide a server-side endpoint: `POST /api/analyze-resume` which:
+     • accepts multi-part form or JSON with resume text and optional JD.
+     • builds a structured prompt to Gemini and returns parsed JSON with fields + suggestions + score.
+   - Output schema (JSON) must be:
+     {
+       "parsed": {
+         "name": string|null,
+         "title": string|null,
+         "contact": { "email": string|null, "phone": string|null, "linkedin": string|null },
+         "summary": string|null,
+         "skills": string[], 
+         "experience": [ { "company": string, "title": string, "start": string|null, "end": string|null, "bullets": string[] } ],
+         "education": [ { "school": string, "degree": string, "year": string|null } ],
+         "projects": [ { "name": string, "desc": string } ],
+         "certifications": string[]
+       },
+       "score": number, // 0-100
+       "high_level_advice": string[],
+       "line_item_suggestions": [{ "location": { "section":"experience","index":0 }, "suggested_bullets": string[] }],
+       "fit_for_job": { "jd_title": string|null, "match_score": number, "gaps": string[], "recommendations": string[] }
+     }
+   - Gemini prompt must instruct the model to:
+     • parse strictly to JSON with exact keys, be conservative with dates, return null when not present
+     • include ATS-style scoring rules (keywords, length, formatting, achievements, quantification)
+     • produce short actionable bullets (max 18 words each)
+
+5. KendoReact components (use any 10 from KendoReact Free)
+   - Example list (use these exact ones): Grid, Button (Buttons), DatePicker (DateInputs), DropDownList (Dropdowns), ListBox (ListBox), Dialog (Dialogs), Upload (use Kendo Inputs / FileInput), Notification (Notification), Tooltip (Tooltip), ProgressBar (Progressbars).
+   - Use their default styling but wrap with Tailwind utilities for layout and spacing.
+   - Reference: KendoReact Free includes 50+ free components. Use packages only for components you implement. (Do not add premium features.)
+
+6. Deliverables (single response)
+   - File/folder outline for the repo (short).
+   - Minimal but complete code for:
+     • `app/page.tsx` — main UI
+     • `components/Upload.tsx` — drag & drop with Kendo Upload / fallback
+     • `app/api/analyze/route.ts` — server route that calls Gemini (uses `process.env.GEMINI_API_KEY`)
+     • `lib/gemini.ts` — small helper to format prompt and call Gemini
+     • `components/ResumeReview.tsx` — shows parsed data, score, suggestions, copy/export buttons
+     • `tailwind.config.js` snippet and `postcss.config.js`
+   - All code must be TypeScript, minimal, and ready-to-run after `npm i`, `.env` setup, and `npm run build`.
+
+7. Non-functional requirements
+   - Limit response tokens: return essential code only — keep each file under ~200 lines if possible.
+   - Add comments where security or developer action is required (e.g., rotate key).
+   - Include one example Gemini system prompt and one example resume input and expected JSON output sample.
+
+8. Testing & deployment notes
+   - Show example `.env` entries (no real keys).
+   - Suggest Vercel or Netlify deployment steps, mention serverless function for `analyze-resume`.
+   - Suggest a simple unit test for parse function (Jest) — single test to validate schema.
+
+User: produce the full code and files now following the above requirements. Keep implementation minimal and production-ready. Do NOT print any API key. Use `process.env.GEMINI_API_KEY` for server code.
+
+End.
