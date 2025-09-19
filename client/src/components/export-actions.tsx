@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { downloadAsFile, copyToClipboard } from "@/lib/api";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
+import { useToast } from "./providers/ToastProvider";
 import type { ResumeAnalysisResult } from "@shared/schema";
 
 interface ExportActionsProps {
@@ -10,14 +11,14 @@ interface ExportActionsProps {
 }
 
 export function ExportActions({ result, onReset }: ExportActionsProps) {
-  const { toast } = useToast();
+  const { addToast } = useToast();
 
   const handleExportPDF = () => {
     // This would integrate with a PDF generation library
-    toast({
-      title: "Export Coming Soon",
-      description: "PDF export functionality will be available in the next update",
-    });
+    addToast(
+      "Export Coming Soon: PDF export functionality will be available in the next update",
+      "info"
+    );
   };
 
   const handleCopyAllSuggestions = async () => {
@@ -26,7 +27,7 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
       ...result.high_level_advice,
       "",
       "DETAILED SUGGESTIONS:",
-      ...result.line_item_suggestions.flatMap(item => item.suggested_bullets),
+      ...result.line_item_suggestions.flatMap((item) => item.suggested_bullets),
       "",
       "JOB FIT RECOMMENDATIONS:",
       ...result.fit_for_job.recommendations,
@@ -34,34 +35,27 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
 
     const success = await copyToClipboard(allSuggestions);
     if (success) {
-      toast({
-        title: "Copied!",
-        description: "All suggestions copied to clipboard",
-      });
+      addToast("Copied!: All suggestions copied to clipboard", "success");
     } else {
-      toast({
-        title: "Copy Failed",
-        description: "Could not copy to clipboard",
-        variant: "destructive",
-      });
+      addToast("Copy Failed: Could not copy to clipboard", "error");
     }
   };
 
   const handleShareAnalysis = () => {
     // This would generate a shareable link
-    toast({
-      title: "Share Coming Soon",
-      description: "Share functionality will be available in the next update",
-    });
+    addToast(
+      "Share Coming Soon: Share functionality will be available in the next update",
+      "info"
+    );
   };
 
   const handleSaveAnalysis = () => {
     const analysisData = JSON.stringify(result, null, 2);
     downloadAsFile(analysisData, "resume-analysis.json", "application/json");
-    toast({
-      title: "Analysis Saved",
-      description: "Analysis data downloaded as JSON file",
-    });
+    addToast(
+      "Analysis Saved: Analysis data downloaded as JSON file",
+      "success"
+    );
   };
 
   const handleExportOptimizedResume = () => {
@@ -81,34 +75,36 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
       result.parsed.skills.join(", "),
       "",
       "EXPERIENCE:",
-      ...result.parsed.experience.flatMap(exp => [
+      ...result.parsed.experience.flatMap((exp) => [
         `${exp.title} at ${exp.company} (${exp.start} - ${exp.end})`,
         ...exp.bullets,
-        ""
+        "",
       ]),
       "EDUCATION:",
-      ...result.parsed.education.map(edu => 
-        `${edu.degree} from ${edu.school} (${edu.year || ""})`
+      ...result.parsed.education.map(
+        (edu) => `${edu.degree} from ${edu.school} (${edu.year || ""})`
       ),
       "",
       "PROJECTS:",
-      ...result.parsed.projects.map(project => 
-        `${project.name}: ${project.desc}`
+      ...result.parsed.projects.map(
+        (project) => `${project.name}: ${project.desc}`
       ),
       "",
       "CERTIFICATIONS:",
       ...result.parsed.certifications,
-    ].filter(line => line !== undefined).join("\n");
+    ]
+      .filter((line) => line !== undefined)
+      .join("\n");
 
     downloadAsFile(optimizedText, "optimized-resume.txt", "text/plain");
-    toast({
-      title: "Resume Exported",
-      description: "Optimized resume downloaded as text file",
-    });
+    addToast(
+      "Resume Exported: Optimized resume downloaded as text file",
+      "success"
+    );
   };
 
   return (
-    <Card className="glass-card border-0">
+    <Card className="border-none bg-transparent shadow-none">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-foreground flex items-center">
           <i className="fas fa-download text-primary mr-3"></i>Export & Actions
@@ -124,9 +120,11 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
           >
             <i className="fas fa-file-pdf text-primary text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
             <h3 className="font-semibold text-foreground mb-1">Export PDF</h3>
-            <p className="text-xs text-muted-foreground text-center">Download optimized resume</p>
+            <p className="text-xs text-muted-foreground text-center">
+              Download optimized resume
+            </p>
           </Button>
-          
+
           <Button
             variant="outline"
             className="flex flex-col items-center p-6 h-auto bg-accent/10 border-accent/20 hover:bg-accent/20 group"
@@ -134,10 +132,14 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
             data-testid="button-copy-suggestions"
           >
             <i className="fas fa-copy text-accent text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
-            <h3 className="font-semibold text-foreground mb-1">Copy All Suggestions</h3>
-            <p className="text-xs text-muted-foreground text-center">Copy to clipboard</p>
+            <h3 className="font-semibold text-foreground mb-1">
+              Copy All Suggestions
+            </h3>
+            <p className="text-xs text-muted-foreground text-center">
+              Copy to clipboard
+            </p>
           </Button>
-          
+
           <Button
             variant="outline"
             className="flex flex-col items-center p-6 h-auto bg-secondary/10 border-secondary/20 hover:bg-secondary/20 group"
@@ -145,10 +147,14 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
             data-testid="button-share"
           >
             <i className="fas fa-share-alt text-secondary-foreground text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
-            <h3 className="font-semibold text-foreground mb-1">Share Analysis</h3>
-            <p className="text-xs text-muted-foreground text-center">Get shareable link</p>
+            <h3 className="font-semibold text-foreground mb-1">
+              Share Analysis
+            </h3>
+            <p className="text-xs text-muted-foreground text-center">
+              Get shareable link
+            </p>
           </Button>
-          
+
           <Button
             variant="outline"
             className="flex flex-col items-center p-6 h-auto bg-muted/10 border-muted/20 hover:bg-muted/20 group"
@@ -156,16 +162,22 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
             data-testid="button-save"
           >
             <i className="fas fa-save text-muted-foreground text-2xl mb-3 group-hover:scale-110 transition-transform"></i>
-            <h3 className="font-semibold text-foreground mb-1">Save Analysis</h3>
-            <p className="text-xs text-muted-foreground text-center">Download as JSON</p>
+            <h3 className="font-semibold text-foreground mb-1">
+              Save Analysis
+            </h3>
+            <p className="text-xs text-muted-foreground text-center">
+              Download as JSON
+            </p>
           </Button>
         </div>
 
         {/* Additional Export Options */}
         <div className="space-y-4">
           <div className="border-t border-border pt-6">
-            <h4 className="text-lg font-semibold text-foreground mb-4">Additional Export Options</h4>
-            
+            <h4 className="text-lg font-semibold text-foreground mb-4">
+              Additional Export Options
+            </h4>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Button
                 variant="outline"
@@ -176,13 +188,17 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
                 <i className="fas fa-file-alt mr-2"></i>
                 Export as Text File
               </Button>
-              
+
               <Button
                 variant="outline"
                 className="justify-start"
                 onClick={() => {
                   const suggestions = result.high_level_advice.join("\n");
-                  downloadAsFile(suggestions, "resume-suggestions.txt", "text/plain");
+                  downloadAsFile(
+                    suggestions,
+                    "resume-suggestions.txt",
+                    "text/plain"
+                  );
                 }}
                 data-testid="button-export-suggestions"
               >
@@ -198,16 +214,16 @@ export function ExportActions({ result, onReset }: ExportActionsProps) {
               <div className="flex items-center space-x-3">
                 <i className="fas fa-check-circle text-primary"></i>
                 <div>
-                  <span className="font-medium text-foreground">Analysis Complete</span>
+                  <span className="font-medium text-foreground">
+                    Analysis Complete
+                  </span>
                   <p className="text-sm text-muted-foreground">
-                    ATS Score: {result.score}/100 • {result.high_level_advice.length} recommendations
+                    ATS Score: {result.score}/100 •{" "}
+                    {result.high_level_advice.length} recommendations
                   </p>
                 </div>
               </div>
-              <Button 
-                onClick={onReset}
-                data-testid="button-analyze-another"
-              >
+              <Button onClick={onReset} data-testid="button-analyze-another">
                 <i className="fas fa-redo mr-2"></i>Analyze Another Resume
               </Button>
             </div>

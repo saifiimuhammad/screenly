@@ -1,7 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 import { type ResumeAnalysisResult } from "@shared/schema";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const API_KEY = "AIzaSyAjD5pXB_rvRO3WeICvFYDJoWujA_-vdfM";
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || API_KEY,
+});
 
 export async function analyzeResumeWithGemini(
   resumeText: string,
@@ -24,7 +28,9 @@ SCORING CRITERIA (0-100):
 - Achievements (25%): Quantified results, impact metrics
 - ATS Compatibility (20%): Keyword density, formatting compatibility
 
-${jobDescription ? `\nJOB DESCRIPTION FOR FIT ANALYSIS:\n${jobDescription}` : ''}
+${
+  jobDescription ? `\nJOB DESCRIPTION FOR FIT ANALYSIS:\n${jobDescription}` : ""
+}
 
 Respond with valid JSON matching this exact schema:
 {
@@ -63,9 +69,9 @@ Respond with valid JSON matching this exact schema:
                   properties: {
                     email: { type: ["string", "null"] },
                     phone: { type: ["string", "null"] },
-                    linkedin: { type: ["string", "null"] }
+                    linkedin: { type: ["string", "null"] },
                   },
-                  required: ["email", "phone", "linkedin"]
+                  required: ["email", "phone", "linkedin"],
                 },
                 summary: { type: ["string", "null"] },
                 skills: { type: "array", items: { type: "string" } },
@@ -78,10 +84,10 @@ Respond with valid JSON matching this exact schema:
                       title: { type: "string" },
                       start: { type: ["string", "null"] },
                       end: { type: ["string", "null"] },
-                      bullets: { type: "array", items: { type: "string" } }
+                      bullets: { type: "array", items: { type: "string" } },
                     },
-                    required: ["company", "title", "start", "end", "bullets"]
-                  }
+                    required: ["company", "title", "start", "end", "bullets"],
+                  },
                 },
                 education: {
                   type: "array",
@@ -90,10 +96,10 @@ Respond with valid JSON matching this exact schema:
                     properties: {
                       school: { type: "string" },
                       degree: { type: "string" },
-                      year: { type: ["string", "null"] }
+                      year: { type: ["string", "null"] },
                     },
-                    required: ["school", "degree", "year"]
-                  }
+                    required: ["school", "degree", "year"],
+                  },
                 },
                 projects: {
                   type: "array",
@@ -101,14 +107,24 @@ Respond with valid JSON matching this exact schema:
                     type: "object",
                     properties: {
                       name: { type: "string" },
-                      desc: { type: "string" }
+                      desc: { type: "string" },
                     },
-                    required: ["name", "desc"]
-                  }
+                    required: ["name", "desc"],
+                  },
                 },
-                certifications: { type: "array", items: { type: "string" } }
+                certifications: { type: "array", items: { type: "string" } },
               },
-              required: ["name", "title", "contact", "summary", "skills", "experience", "education", "projects", "certifications"]
+              required: [
+                "name",
+                "title",
+                "contact",
+                "summary",
+                "skills",
+                "experience",
+                "education",
+                "projects",
+                "certifications",
+              ],
             },
             score: { type: "number", minimum: 0, maximum: 100 },
             high_level_advice: { type: "array", items: { type: "string" } },
@@ -121,14 +137,17 @@ Respond with valid JSON matching this exact schema:
                     type: "object",
                     properties: {
                       section: { type: "string" },
-                      index: { type: "number" }
+                      index: { type: "number" },
                     },
-                    required: ["section", "index"]
+                    required: ["section", "index"],
                   },
-                  suggested_bullets: { type: "array", items: { type: "string" } }
+                  suggested_bullets: {
+                    type: "array",
+                    items: { type: "string" },
+                  },
                 },
-                required: ["location", "suggested_bullets"]
-              }
+                required: ["location", "suggested_bullets"],
+              },
             },
             fit_for_job: {
               type: "object",
@@ -136,12 +155,18 @@ Respond with valid JSON matching this exact schema:
                 jd_title: { type: ["string", "null"] },
                 match_score: { type: "number", minimum: 0, maximum: 100 },
                 gaps: { type: "array", items: { type: "string" } },
-                recommendations: { type: "array", items: { type: "string" } }
+                recommendations: { type: "array", items: { type: "string" } },
               },
-              required: ["jd_title", "match_score", "gaps", "recommendations"]
-            }
+              required: ["jd_title", "match_score", "gaps", "recommendations"],
+            },
           },
-          required: ["parsed", "score", "high_level_advice", "line_item_suggestions", "fit_for_job"]
+          required: [
+            "parsed",
+            "score",
+            "high_level_advice",
+            "line_item_suggestions",
+            "fit_for_job",
+          ],
         },
       },
       contents: resumeText,
@@ -153,9 +178,14 @@ Respond with valid JSON matching this exact schema:
     }
 
     const data: ResumeAnalysisResult = JSON.parse(rawJson);
+    console.log(data);
     return data;
   } catch (error) {
     console.error("Gemini analysis error:", error);
-    throw new Error(`Failed to analyze resume: ${error instanceof Error ? error.message : "Unknown error"}`);
+    throw new Error(
+      `Failed to analyze resume: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`
+    );
   }
 }

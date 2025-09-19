@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -37,18 +37,23 @@
   --sidebar-accent-foreground: hsl(210, 40%, 98%);
   --sidebar-border: hsl(217, 19%, 27%);
   --sidebar-ring: hsl(158, 64%, 52%);
-  --font-sans: 'Inter', 'system-ui', 'sans-serif';
-  --font-serif: 'Georgia', 'serif';
-  --font-mono: 'Menlo', 'monospace';
+  --font-sans: "Inter", "system-ui", "sans-serif";
+  --font-serif: "Georgia", "serif";
+  --font-mono: "Menlo", "monospace";
   --radius: 16px;
-  --shadow-2xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 1px 2px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 1px 2px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 2px 4px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 4px 6px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 8px 10px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
+  --shadow-2xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
+  --shadow-xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
+  --shadow-sm: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 1px 2px -1px hsl(158, 64%, 52%, 0);
+  --shadow: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 1px 2px -1px hsl(158, 64%, 52%, 0);
+  --shadow-md: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 2px 4px -1px hsl(158, 64%, 52%, 0);
+  --shadow-lg: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 4px 6px -1px hsl(158, 64%, 52%, 0);
+  --shadow-xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 8px 10px -1px hsl(158, 64%, 52%, 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
@@ -86,18 +91,23 @@
   --sidebar-accent-foreground: hsl(210, 40%, 98%);
   --sidebar-border: hsl(217, 19%, 27%);
   --sidebar-ring: hsl(158, 64%, 52%);
-  --font-sans: 'Inter', 'system-ui', 'sans-serif';
-  --font-serif: 'Georgia', 'serif';
-  --font-mono: 'Menlo', 'monospace';
+  --font-sans: "Inter", "system-ui", "sans-serif";
+  --font-serif: "Georgia", "serif";
+  --font-mono: "Menlo", "monospace";
   --radius: 16px;
-  --shadow-2xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 1px 2px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 1px 2px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 2px 4px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 4px 6px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00), 0px 8px 10px -1px hsl(158, 64%, 52%, 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0.00);
+  --shadow-2xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
+  --shadow-xs: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
+  --shadow-sm: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 1px 2px -1px hsl(158, 64%, 52%, 0);
+  --shadow: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 1px 2px -1px hsl(158, 64%, 52%, 0);
+  --shadow-md: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 2px 4px -1px hsl(158, 64%, 52%, 0);
+  --shadow-lg: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 4px 6px -1px hsl(158, 64%, 52%, 0);
+  --shadow-xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0),
+    0px 8px 10px -1px hsl(158, 64%, 52%, 0);
+  --shadow-2xl: 0px 2px 0px 0px hsl(158, 64%, 52%, 0);
 }
 
 @layer base {
@@ -113,7 +123,11 @@
 
 /* Custom styles for the AI Resume Analyzer */
 .gradient-bg {
-  background: linear-gradient(135deg, hsl(222, 84%, 5%) 0%, hsl(217, 19%, 8%) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(222, 84%, 5%) 0%,
+    hsl(217, 19%, 8%) 100%
+  );
 }
 
 .glass-card {
@@ -154,3 +168,18 @@
   opacity: 1;
 }
 
+/* global.css */
+.k-tabstrip {
+  border-radius: 0.5rem;
+}
+
+.k-tabstrip-items .k-item {
+  background-color: #090e18 !important;
+  color: #fff !important;
+  border: none;
+}
+
+.k-tabstrip-items .k-item.k-active {
+  background-color: rgba(30, 41, 59, 0.7) !important; /* dark gray active */
+  border-bottom: 2px solid #3b82f6; /* blue active underline */
+}
