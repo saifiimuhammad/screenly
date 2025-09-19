@@ -68,7 +68,7 @@ app.use((req, res, next) => {
   // }, () => {
   //   log(`serving on port ${port}`);
   // });
-  server.listen(5000, "127.0.0.1", () => {
-    console.log("Server running on http://127.0.0.1:5000");
+  server.listen(port, "0.0.0.0", () => {
+    console.log("Server running on http://0.0.0.0:5000");
   });
 })();
