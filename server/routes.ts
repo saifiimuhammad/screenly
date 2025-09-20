@@ -19,13 +19,17 @@ const upload = multer({
     const allowedTypes = [
       "application/pdf",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "text/plain"
+      "text/plain",
     ];
-    
+
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error("Invalid file type. Only PDF, DOCX, and TXT files are allowed."));
+      cb(
+        new Error(
+          "Invalid file type. Only PDF, DOCX, and TXT files are allowed."
+        )
+      );
     }
   },
 });
@@ -47,17 +51,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const parsedDoc = await parseDocument(req.file.path, req.file.mimetype);
         resumeText = parsedDoc.text;
         fileName = req.file.originalname;
-        
+
         // Clean up uploaded file
         fs.unlinkSync(req.file.path);
-      } 
+      }
       // Handle text input
       else if (req.body.resumeText) {
         resumeText = req.body.resumeText;
-      } 
-      else {
-        return res.status(400).json({ 
-          message: "No resume provided. Please upload a file or provide text input." 
+      } else {
+        return res.status(400).json({
+          message:
+            "No resume provided. Please upload a file or provide text input.",
         });
       }
 
@@ -98,25 +102,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
           analyzedAt: new Date().toISOString(),
         },
       });
-
     } catch (error) {
       console.error("Resume analysis error:", error);
-      
+
       if (error instanceof Error) {
         // Handle specific error types
         if (error.message.includes("Invalid file type")) {
           return res.status(400).json({ message: error.message });
         }
         if (error.message.includes("File too large")) {
-          return res.status(400).json({ message: "File size exceeds 10MB limit" });
+          return res
+            .status(400)
+            .json({ message: "File size exceeds 10MB limit" });
         }
         if (error.message.includes("Failed to analyze resume")) {
-          return res.status(500).json({ message: "AI analysis failed. Please try again." });
+          return res
+            .status(500)
+            .json({ message: "AI analysis failed. Please try again." });
         }
       }
-      
-      res.status(500).json({ 
-        message: "An error occurred while analyzing your resume. Please try again." 
+
+      res.status(500).json({
+        message:
+          "An error occurred while analyzing your resume. Please try again.",
       });
     }
   });

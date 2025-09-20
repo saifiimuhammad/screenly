@@ -1,4 +1,3 @@
-import { apiRequest } from "./queryClient";
 import type { ResumeAnalysisResult } from "@shared/schema";
 
 export interface AnalyzeResponse {
@@ -16,15 +15,15 @@ export async function analyzeResume(data: {
   jobDescription?: string;
 }): Promise<AnalyzeResponse> {
   const formData = new FormData();
-  
+
   if (data.resumeFile) {
     formData.append("resume", data.resumeFile);
   }
-  
+
   if (data.resumeText) {
     formData.append("resumeText", data.resumeText);
   }
-  
+
   if (data.jobDescription) {
     formData.append("jobDescription", data.jobDescription);
   }
@@ -53,7 +52,11 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   }
 }
 
-export function downloadAsFile(content: string, filename: string, mimeType: string = "text/plain") {
+export function downloadAsFile(
+  content: string,
+  filename: string,
+  mimeType: string = "text/plain"
+) {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");

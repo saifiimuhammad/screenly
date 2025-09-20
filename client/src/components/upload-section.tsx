@@ -1,19 +1,15 @@
-import { useState, useCallback } from "react";
-// import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/providers/ToastProvider";
 import { Button } from "@progress/kendo-react-buttons";
 import { SvgIcon } from "@progress/kendo-react-common";
+import { TextArea } from "@progress/kendo-react-inputs";
+import { ProgressBar } from "@progress/kendo-react-progressbars";
 import {
   clipboardIcon,
-  sparklesIcon,
-  fileAddIcon,
-  uploadIcon,
   cloudIcon,
-  codeIcon,
+  fileAddIcon,
+  sparklesIcon,
 } from "@progress/kendo-svg-icons";
-import { TextArea } from "@progress/kendo-react-inputs";
+import { useCallback, useState } from "react";
 
 interface UploadSectionProps {
   onAnalyze: (data: {
@@ -22,9 +18,14 @@ interface UploadSectionProps {
     jobDescription?: string;
   }) => void;
   isLoading: boolean;
+  progress: number;
 }
 
-export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
+export default function UploadSection({
+  onAnalyze,
+  isLoading,
+  progress,
+}: Readonly<UploadSectionProps>) {
   const [resumeText, setResumeText] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -73,7 +74,7 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
     }
 
     setSelectedFile(file);
-    setResumeText(""); // Clear text input when file is selected
+    setResumeText("");
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +121,7 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
   return (
     <div className="space-y-8">
       {/* Upload Section */}
-      <div className="glass-card rounded-2xl p-8">
+      <div className="glass-card rounded-2xl p-8 px-4 sm:px-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-foreground mb-3">
             Upload Your Resume
@@ -132,7 +133,7 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
 
         {/* Upload Area */}
         <div
-          className={`upload-area rounded-xl p-12 text-center cursor-pointer transition-all duration-300 ${
+          className={`upload-area rounded-xl p-12 px-2 sm:px-12 text-center cursor-pointer transition-all duration-300 ${
             isDragOver ? "drag-over" : ""
           }`}
           onDragOver={handleDragOver}
@@ -198,7 +199,15 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
                   Processing
                 </span>
               </div>
-              <Progress value={undefined} className="w-full" />
+              {/* <Progress value={undefined} className="w-full" /> */}
+              {progress > 0 && progress < 100 && (
+                <ProgressBar
+                  value={progress}
+                  animation={{ duration: 1000 }}
+                  style={{ height: "10px", color: "#ebebeb" }}
+                  progressStyle={{ backgroundColor: "var(--primary)" }}
+                />
+              )}
             </div>
           )}
         </div>
@@ -232,7 +241,7 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
             onBlur={() => setIsFocused(false)}
           />
 
-          <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center flex-col gap-y-2 w-full sm:flex-row justify-between mt-4">
             <Button
               onClick={handlePasteFromClipboard}
               size={"large"}
@@ -275,7 +284,7 @@ export function UploadSection({ onAnalyze, isLoading }: UploadSectionProps) {
       </div>
 
       {/* Job Description Section */}
-      <div className="glass-card rounded-2xl p-8">
+      <div className="glass-card rounded-2xl p-8 px-4 sm:px-8">
         <h2 className="text-2xl font-bold text-foreground mb-6">
           <i className="fas fa-briefcase text-primary mr-3"></i>Job Description
           (Optional)

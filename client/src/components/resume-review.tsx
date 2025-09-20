@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { useToast } from "@/components/providers/ToastProvider";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-// import { Card, CardBody, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import type { ResumeAnalysisResult } from "@shared/schema";
+import { Button } from "@progress/kendo-react-buttons";
+import { SvgIcon } from "@progress/kendo-react-common";
+import { Input, TextArea } from "@progress/kendo-react-inputs";
 import {
   Card,
   CardBody,
@@ -14,14 +11,18 @@ import {
   CardTitle,
 } from "@progress/kendo-react-layout";
 import { userIcon } from "@progress/kendo-svg-icons";
-import { SvgIcon } from "@progress/kendo-react-common";
+import type { ResumeAnalysisResult } from "@shared/schema";
+import { useState } from "react";
 
 interface ResumeReviewProps {
   result: ResumeAnalysisResult;
   onCopySuggestion: (text: string) => void;
 }
 
-export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
+export default function ResumeReview({
+  result,
+  onCopySuggestion,
+}: Readonly<ResumeReviewProps>) {
   const [editMode, setEditMode] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState<{
     [key: string]: boolean;
@@ -62,7 +63,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
       }}
     >
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-col lg:flex-row gap-y-2">
           <CardTitle
             style={{
               color: "var(--foreground)",
@@ -81,16 +82,22 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
             Parsed Resume Data
           </CardTitle>
           <Button
-            variant="secondary"
+            themeColor="dark"
+            size="large"
+            rounded={"large"}
             onClick={handleEdit}
             data-testid="button-edit-mode"
+            style={{
+              backgroundColor: "var(--muted)",
+              padding: "0.5rem 1rem",
+            }}
           >
             <i className={`fas ${editMode ? "fa-save" : "fa-edit"} mr-2`}></i>
             {editMode ? "Save" : "Edit Mode"}
           </Button>
         </div>
       </CardHeader>
-      <CardBody style={{ background: "transparent", marginBlock: "1rem" }}>
+      <CardBody style={{ background: "transparent" }}>
         {/* Contact Information */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-4">
@@ -105,8 +112,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <Input
                 value={result.parsed.name || ""}
                 readOnly={!editMode}
-                className={editMode ? "" : "bg-muted"}
                 data-testid="input-name"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
 
@@ -117,8 +127,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <Input
                 value={result.parsed.title || ""}
                 readOnly={!editMode}
-                className={editMode ? "" : "bg-muted"}
                 data-testid="input-title"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
 
@@ -130,8 +143,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                 type="email"
                 value={result.parsed.contact.email || ""}
                 readOnly={!editMode}
-                className={editMode ? "" : "bg-muted"}
                 data-testid="input-email"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
 
@@ -142,8 +158,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <Input
                 value={result.parsed.contact.phone || ""}
                 readOnly={!editMode}
-                className={editMode ? "" : "bg-muted"}
                 data-testid="input-phone"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
 
@@ -154,8 +173,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <Input
                 value={result.parsed.contact.linkedin || ""}
                 readOnly={!editMode}
-                className={editMode ? "" : "bg-muted"}
                 data-testid="input-linkedin"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
           </div>
@@ -170,7 +192,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <label className="block text-sm font-medium text-muted-foreground mb-2">
                 Technical Skills
               </label>
-              <div className="bg-input border border-border rounded-lg p-3 max-h-32 overflow-y-auto">
+              <div className="bg-input border border-border rounded p-1 max-h-32 overflow-y-auto">
                 <div className="flex flex-wrap gap-2">
                   {result.parsed.skills.map((skill, index) => (
                     <Badge
@@ -190,13 +212,17 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
               <label className="block text-sm font-medium text-muted-foreground mb-2">
                 Professional Summary
               </label>
-              <Textarea
+              <TextArea
                 value={result.parsed.summary || ""}
                 readOnly={!editMode}
                 className={`h-[14.15rem] resize-none ${
                   editMode ? "" : "bg-muted"
                 }`}
                 data-testid="textarea-summary"
+                style={{
+                  backgroundColor: editMode ? "unset" : "var(--muted)",
+                  color: "var(--foreground)",
+                }}
               />
             </div>
           </div>
@@ -220,7 +246,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
             return (
               <div
                 key={expIndex}
-                className="bg-background/50 rounded-lg p-6 space-y-4"
+                className="bg-background/50 rounded-lg space-y-4"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -230,8 +256,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                     <Input
                       value={exp.company}
                       readOnly={!editMode}
-                      className={editMode ? "" : "bg-muted"}
                       data-testid={`input-company-${expIndex}`}
+                      style={{
+                        backgroundColor: editMode ? "unset" : "var(--muted)",
+                        color: "var(--foreground)",
+                      }}
                     />
                   </div>
                   <div>
@@ -241,8 +270,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                     <Input
                       value={exp.title}
                       readOnly={!editMode}
-                      className={editMode ? "" : "bg-muted"}
                       data-testid={`input-position-${expIndex}`}
+                      style={{
+                        backgroundColor: editMode ? "unset" : "var(--muted)",
+                        color: "var(--foreground)",
+                      }}
                     />
                   </div>
                 </div>
@@ -255,8 +287,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                     <Input
                       value={exp.start || ""}
                       readOnly={!editMode}
-                      className={editMode ? "" : "bg-muted"}
                       data-testid={`input-start-${expIndex}`}
+                      style={{
+                        backgroundColor: editMode ? "unset" : "var(--muted)",
+                        color: "var(--foreground)",
+                      }}
                     />
                   </div>
                   <div>
@@ -266,24 +301,29 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                     <Input
                       value={exp.end || ""}
                       readOnly={!editMode}
-                      className={editMode ? "" : "bg-muted"}
                       data-testid={`input-end-${expIndex}`}
+                      style={{
+                        backgroundColor: editMode ? "unset" : "var(--muted)",
+                        color: "var(--foreground)",
+                      }}
                     />
                   </div>
                 </div>
 
                 {/* Achievement Bullets */}
                 <div>
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between flex-col sm:flex-row mb-2">
                     <label className="block text-sm font-medium text-muted-foreground">
                       Key Achievements
                     </label>
                     {suggestions.length > 0 && (
                       <Button
-                        variant="ghost"
-                        size="sm"
+                        themeColor="tertiary"
+                        fillMode={"flat"}
+                        size="small"
                         onClick={() => toggleSuggestions(suggestionKey)}
                         data-testid={`button-suggestions-${expIndex}`}
+                        style={{ color: "var(--accent)" }}
                       >
                         <i className="fas fa-magic text-accent mr-2"></i>
                         {showSuggestions[suggestionKey] ? "Hide" : "Show"} AI
@@ -295,7 +335,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                   <div className="space-y-3">
                     {exp.bullets.map((bullet, bulletIndex) => (
                       <div key={bulletIndex} className="relative group">
-                        <Textarea
+                        <TextArea
                           value={bullet}
                           readOnly={!editMode}
                           className={`resize-none ${
@@ -303,11 +343,17 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                           }`}
                           rows={2}
                           data-testid={`textarea-bullet-${expIndex}-${bulletIndex}`}
+                          style={{
+                            backgroundColor: editMode
+                              ? "unset"
+                              : "var(--muted)",
+                            color: "var(--foreground)",
+                          }}
                         />
                         {editMode && (
                           <Button
-                            variant="ghost"
-                            size="sm"
+                            themeColor="tertiary"
+                            size="small"
                             className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
                             onClick={() =>
                               toggleSuggestions(
@@ -331,8 +377,9 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                               Suggestions
                             </h4>
                             <Button
-                              variant="ghost"
-                              size="sm"
+                              themeColor="light"
+                              fillMode={"outline"}
+                              size="small"
                               onClick={() => toggleSuggestions(suggestionKey)}
                             >
                               <i className="fas fa-times text-xs"></i>
@@ -352,8 +399,8 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                                     </p>
                                     <div className="flex space-x-1 opacity-0 group-hover/suggestion:opacity-100 transition-opacity">
                                       <Button
-                                        variant="ghost"
-                                        size="sm"
+                                        themeColor="light"
+                                        fillMode={"outline"}
                                         onClick={() =>
                                           onCopySuggestion(suggestion)
                                         }
@@ -362,12 +409,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                                         <i className="fas fa-copy text-xs"></i>
                                       </Button>
                                       <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="hover:bg-primary/20"
+                                        themeColor="success"
+                                        fillMode={"outline"}
                                         data-testid={`button-apply-suggestion-${expIndex}-${suggestionIndex}`}
                                       >
-                                        <i className="fas fa-check text-xs text-primary"></i>
+                                        <i className="fas fa-check text-xs "></i>
                                       </Button>
                                     </div>
                                   </div>
@@ -396,7 +442,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
             {result.parsed.education.map((edu, index) => (
               <div
                 key={index}
-                className="bg-background/50 rounded-lg p-4 grid grid-cols-1 md:grid-cols-3 gap-4"
+                className="bg-background/50 rounded-lg pt-4 pb-8 grid grid-cols-1 md:grid-cols-3 gap-4"
               >
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-2">
@@ -405,8 +451,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                   <Input
                     value={edu.school}
                     readOnly={!editMode}
-                    className={editMode ? "" : "bg-muted"}
                     data-testid={`input-school-${index}`}
+                    style={{
+                      backgroundColor: editMode ? "unset" : "var(--muted)",
+                      color: "var(--foreground)",
+                    }}
                   />
                 </div>
                 <div>
@@ -416,8 +465,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                   <Input
                     value={edu.degree}
                     readOnly={!editMode}
-                    className={editMode ? "" : "bg-muted"}
                     data-testid={`input-degree-${index}`}
+                    style={{
+                      backgroundColor: editMode ? "unset" : "var(--muted)",
+                      color: "var(--foreground)",
+                    }}
                   />
                 </div>
                 <div>
@@ -427,8 +479,11 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                   <Input
                     value={edu.year || ""}
                     readOnly={!editMode}
-                    className={editMode ? "" : "bg-muted"}
                     data-testid={`input-year-${index}`}
+                    style={{
+                      backgroundColor: editMode ? "unset" : "var(--muted)",
+                      color: "var(--foreground)",
+                    }}
                   />
                 </div>
               </div>
@@ -446,7 +501,7 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
             {result.parsed.projects.map((project, index) => (
               <div
                 key={index}
-                className="bg-background/50 rounded-lg p-4 space-y-4"
+                className="bg-background/50 rounded-lg pt-4 pb-8 space-y-4"
               >
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-2">
@@ -455,20 +510,27 @@ export function ResumeReview({ result, onCopySuggestion }: ResumeReviewProps) {
                   <Input
                     value={project.name}
                     readOnly={!editMode}
-                    className={editMode ? "" : "bg-muted"}
                     data-testid={`input-project-name-${index}`}
+                    style={{
+                      backgroundColor: editMode ? "unset" : "var(--muted)",
+                      color: "var(--foreground)",
+                    }}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-muted-foreground mb-2">
                     Description
                   </label>
-                  <Textarea
+                  <TextArea
                     value={project.desc}
                     readOnly={!editMode}
                     className={`resize-none ${editMode ? "" : "bg-muted"}`}
                     rows={2}
                     data-testid={`textarea-project-desc-${index}`}
+                    style={{
+                      backgroundColor: editMode ? "unset" : "var(--muted)",
+                      color: "var(--foreground)",
+                    }}
                   />
                 </div>
               </div>

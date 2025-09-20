@@ -1,22 +1,25 @@
-import { useState } from "react";
-import { TabStrip, TabStripTab } from "@progress/kendo-react-layout";
-import { Button } from "@progress/kendo-react-buttons";
-import { ProgressBar } from "@progress/kendo-react-progressbars";
-import { Badge } from "@progress/kendo-react-indicators";
-import type { ResumeAnalysisResult } from "@shared/schema";
-import { alignBottomIcon, copyIcon } from "@progress/kendo-svg-icons";
-import { ResumeReview } from "./resume-review";
-import { JobFitAnalysis } from "./job-fit-analysis";
-import { ExportActions } from "./export-actions";
 import { copyToClipboard } from "@/lib/api";
+import { Button } from "@progress/kendo-react-buttons";
+import { Badge } from "@progress/kendo-react-indicators";
+import { TabStrip, TabStripTab } from "@progress/kendo-react-layout";
+import { ProgressBar } from "@progress/kendo-react-progressbars";
+import { copyIcon } from "@progress/kendo-svg-icons";
+import type { ResumeAnalysisResult } from "@shared/schema";
+import { useState } from "react";
+import ExportActions from "./export-actions";
+import JobFitAnalysis from "./job-fit-analysis";
 import { useToast } from "./providers/ToastProvider";
+import ResumeReview from "./resume-review";
 
 interface AnalysisResultsProps {
   result: ResumeAnalysisResult;
   onReset: () => void;
 }
 
-export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
+export default function AnalysisResults({
+  result,
+  onReset,
+}: Readonly<AnalysisResultsProps>) {
   const { addToast } = useToast();
   const [selected, setSelected] = useState(0);
 
@@ -38,7 +41,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
   return (
     <div className="space-y-8">
       {/* ATS Score Card */}
-      <div className="p-6 rounded-lg shadow glass-card">
+      <div className="p-8 px-4 sm:px-8 rounded-lg shadow glass-card">
         <h2 className="text-2xl font-bold flex items-center">
           <i className="fas fa-chart-line text-blue-600 mr-3"></i>
           ATS Score Analysis
@@ -81,7 +84,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
           {/* Score Breakdown using Kendo ProgressBar */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between p-4 bg-card rounded-lg">
-              <span>Format & Structure</span>
+              <span className="text-sm sm:text-md">Format & Structure</span>
               <ProgressBar
                 value={Math.min(result.score + 7, 100)}
                 style={{ width: 100 }}
@@ -90,7 +93,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
             </div>
 
             <div className="flex items-center justify-between p-4 bg-card rounded-lg">
-              <span>Keywords & Skills</span>
+              <span className="text-sm sm:text-md">Keywords & Skills</span>
               <ProgressBar
                 value={Math.max(result.score - 6, 0)}
                 style={{ width: 100 }}
@@ -99,7 +102,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
             </div>
 
             <div className="flex items-center justify-between p-4 bg-card rounded-lg">
-              <span>Achievements</span>
+              <span className="text-sm sm:text-md">Achievements</span>
               <ProgressBar
                 value={Math.max(result.score - 10, 0)}
                 style={{ width: 100 }}
@@ -111,7 +114,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
       </div>
 
       {/* Recommendations */}
-      <div className="p-6 rounded-lg shadow glass-card">
+      <div className="p-8 px-4 sm:px-8 rounded-lg shadow glass-card">
         <h2 className="text-2xl font-bold flex items-center">
           <i className="fas fa-lightbulb text-yellow-500 mr-3"></i>
           Key Recommendations
@@ -120,7 +123,7 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
           {result.high_level_advice.map((advice, index) => (
             <div key={index} className="p-4 bg-card rounded-lg">
               <p className="font-medium">{advice}</p>
-              <Badge themeColor="info" className="mt-2">
+              <Badge themeColor="info" className="mt-2 mr-8">
                 High Impact
               </Badge>
 

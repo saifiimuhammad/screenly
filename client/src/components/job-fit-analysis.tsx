@@ -1,7 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+} from "@progress/kendo-react-layout";
+import { Button } from "@progress/kendo-react-buttons";
+import { SvgIcon } from "@progress/kendo-react-common";
+import { ProgressBar } from "@progress/kendo-react-progressbars";
+import {
+  blurIcon,
+  trackChangesIcon,
+  warningTriangleIcon,
+} from "@progress/kendo-svg-icons";
 import type { ResumeAnalysisResult } from "@shared/schema";
 
 interface JobFitAnalysisProps {
@@ -9,10 +20,10 @@ interface JobFitAnalysisProps {
   onCopySuggestion: (text: string) => void;
 }
 
-export function JobFitAnalysis({
+export default function JobFitAnalysis({
   fitData,
   onCopySuggestion,
-}: JobFitAnalysisProps) {
+}: Readonly<JobFitAnalysisProps>) {
   const getMatchColor = (score: number) => {
     if (score >= 80) return "text-primary";
     if (score >= 60) return "text-accent";
@@ -26,17 +37,37 @@ export function JobFitAnalysis({
   };
 
   return (
-    <Card className="border-none bg-transparent shadow-none max-w-max mx-auto">
+    <Card
+      style={{
+        background: "transparent",
+        color: "var(--foreground)",
+        border: "none",
+        boxShadow: "none",
+      }}
+    >
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-foreground flex items-center">
-          <i className="fas fa-target text-accent mr-3"></i>Job Fit Analysis
+        <CardTitle
+          style={{
+            color: "var(--foreground)",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <SvgIcon
+            icon={trackChangesIcon}
+            className="text-accent mr-3"
+            size="xlarge"
+          />
+          Job Fit Analysis
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardBody style={{ background: "transparent" }}>
         {fitData.jd_title ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-2">
                 <h3 className="text-lg font-semibold text-foreground">
                   Role Match Score
                 </h3>
@@ -50,16 +81,22 @@ export function JobFitAnalysis({
                 </span>
               </div>
 
-              <div className="w-full bg-muted rounded-full h-3 mb-6">
-                <div
-                  className={`h-3 rounded-full ${
-                    fitData.match_score >= 80
-                      ? "bg-primary"
-                      : fitData.match_score >= 60
-                      ? "bg-accent"
-                      : "bg-destructive"
-                  }`}
-                  style={{ width: `${fitData.match_score}%` }}
+              <div className="w-full rounded-full h-3 mb-6">
+                <ProgressBar
+                  value={fitData.match_score}
+                  animation={{ duration: 1000 }}
+                  style={{
+                    height: "10px",
+                    color: "#ebebeb",
+                  }}
+                  progressStyle={{
+                    backgroundColor:
+                      fitData.match_score >= 80
+                        ? "hsl(158, 64%, 52%)" // primary color
+                        : fitData.match_score >= 60
+                        ? "hsl(38, 92%, 50%)" // accent color
+                        : "hsl(0, 62%, 30%)", // destructive color
+                  }}
                 />
               </div>
 
@@ -104,15 +141,20 @@ export function JobFitAnalysis({
                     className="flex items-start space-x-3 p-3 bg-destructive/10 border border-destructive/20 rounded-lg"
                     data-testid={`gap-${index}`}
                   >
-                    <i className="fas fa-exclamation-triangle text-destructive text-sm mt-1"></i>
+                    <SvgIcon
+                      icon={warningTriangleIcon}
+                      className="text-destructive mt-1"
+                    />
+
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">
                         {gap}
                       </p>
                     </div>
                     <Button
-                      variant="ghost"
-                      size="sm"
+                      themeColor="light"
+                      fillMode="clear"
+                      size="small"
                       onClick={() => onCopySuggestion(gap)}
                       data-testid={`button-copy-gap-${index}`}
                     >
@@ -127,15 +169,20 @@ export function JobFitAnalysis({
                     className="flex items-start space-x-3 p-3 bg-accent/10 border border-accent/20 rounded-lg"
                     data-testid={`recommendation-${index}`}
                   >
-                    <i className="fas fa-lightbulb text-accent text-sm mt-1"></i>
+                    <SvgIcon
+                      icon={blurIcon}
+                      className="text-accent mt-1"
+                      size="large"
+                    />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-foreground">
                         {recommendation}
                       </p>
                     </div>
                     <Button
-                      variant="ghost"
-                      size="sm"
+                      themeColor="light"
+                      fillMode="clear"
+                      size="small"
                       onClick={() => onCopySuggestion(recommendation)}
                       data-testid={`button-copy-recommendation-${index}`}
                     >
@@ -163,7 +210,7 @@ export function JobFitAnalysis({
             </Badge>
           </div>
         )}
-      </CardContent>
+      </CardBody>
     </Card>
   );
 }

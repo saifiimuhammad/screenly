@@ -1,10 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { type ResumeAnalysisResult } from "@shared/schema";
 
-const API_KEY = "AIzaSyAjD5pXB_rvRO3WeICvFYDJoWujA_-vdfM";
-
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY || API_KEY,
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 export async function analyzeResumeWithGemini(
