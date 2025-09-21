@@ -1,6 +1,7 @@
 import { Button } from "@progress/kendo-react-buttons";
 import { Typography } from "@progress/kendo-react-common";
 import { menuIcon, questionCircleIcon } from "@progress/kendo-svg-icons";
+import logoSvg from "@/assets/logo.svg";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -12,11 +13,11 @@ const Header = ({ toggleSidebar }: Readonly<HeaderProps>) => {
       <div className="w-full mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div
-            className="flex items-center space-x-6 lg:space-x-4 cursor-pointer"
+            className="flex items-center space-x-2 lg:space-x-4 cursor-pointer"
             onClick={() => window.location.reload()}
           >
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <i className="fas fa-brain text-primary-foreground text-lg"></i>
+            <div className="flex items-center justify-center">
+              <img src={logoSvg} alt="Screenly Logo" className="w-10 h-auto" />
             </div>
             <div>
               <Typography.h4 style={{ lineHeight: "0.2", marginTop: ".85rem" }}>
