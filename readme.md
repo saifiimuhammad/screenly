@@ -1,79 +1,115 @@
-# Overview
+# 💎 Screenly – AI-Powered Resume Analyzer
 
-This is an AI-powered Resume Analyzer web application that allows users to upload resumes and receive detailed analysis with ATS scoring and job fit recommendations. The application uses a full-stack JavaScript architecture with React frontend and Express backend, powered by Google's Gemini AI for resume analysis.
+_Submission for the [KendoReact Free Components Challenge](https://dev.to/challenges/kendoreact-2025-09-10)_
 
-# User Preferences
+👉 **Live Demo:** [screenly.ai](https://ai-resume-analyzer-na44.onrender.com/)
 
-Preferred communication style: Simple, everyday language.
+---
 
-# System Architecture
+## ✨ What is Screenly?
 
-## Frontend Architecture
+Screenly is your **AI-powered career sidekick**. It helps job seekers and recruiters **analyze resumes in seconds** with:  
+⚡ **ATS scoring** → See how recruiter software reads your resume  
+⚡ **Skill insights** → Find gaps & strengths instantly  
+⚡ **Job-fit recommendations** → Understand how well you match a role
 
-- **Framework**: React 18 with TypeScript using Vite as the build tool
-- **Routing**: Wouter for lightweight client-side routing
-- **State Management**: TanStack React Query for server state and React hooks for local state
-- **UI Components**: Kendoreact Free components, Shadcn & Tailwindcss for styling
-- **Styling**: Tailwind CSS with a dark theme design system using CSS custom properties
-- **Forms**: React Hook Form with Zod validation for type-safe form handling
+Powered by **Google’s Gemini AI**, wrapped in a **React + KendoReact UI**, and backed by an **Express server**.  
+This isn’t just another project—it’s a tool to **win interviews**.
 
-The frontend follows a component-based architecture with clear separation between UI components, pages, and utility functions. The design system uses a modern dark theme with accent colors and glass-morphism effects.
+---
 
-## Backend Architecture
+## 🚀 Features at a Glance
 
-- **Framework**: Express.js with TypeScript running on Node.js
-- **File Upload**: Multer middleware for handling multipart form data with file type validation
-- **Document Parsing**: Supports PDF, DOCX, and plain text files using pdf-parse and mammoth libraries
-- **API Structure**: RESTful endpoints with proper error handling and request logging
-- **Storage**: In-memory storage implementation with interface-based design for future database integration
+- 📂 Upload resumes in **PDF/DOC**
+- 🧠 Smart **ATS compatibility scoring**
+- 🎯 Instant **job-fit score** with colorful progress bars
+- 🔍 **Skill gap analysis** & actionable recommendations
+- ⚛️ Powered by sleek **KendoReact components**
+- 📱 Fully responsive, fast, and modern
 
-The backend uses a modular architecture with separate layers for routing, business logic, and data storage. The API design follows REST principles with proper HTTP status codes and JSON responses.
+---
 
-## Data Storage Solutions
+## 🎥 Screenshots
 
-- **Current Implementation**: In-memory storage using Map data structures for development
-- **Database Schema**: Drizzle ORM with PostgreSQL schema definitions ready for production
-- **Migration Support**: Drizzle migrations configured for schema versioning
-- **Future-Ready**: Interface-based storage layer allows easy migration to PostgreSQL
+| Resume Upload                                                                                | Export Options                                                                               | Job Fit                                                                                      | Resume Review                                                                                |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| ![Demo 1](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cdx68lhfxs8e0dk76td5.png) | ![Demo 2](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/xpqd8j0p5fkzmk0rxue7.png) | ![Demo 3](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/cx4z9y6pd94djw7tm8rx.png) | ![Demo 4](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/3o55gqq9ab3y2ja6mh0z.png) |
 
-The storage layer is designed with interfaces to allow seamless transition from in-memory storage to PostgreSQL when needed.
+---
 
-## Authentication and Authorization (Not yet implemented)
+## 🛠 Tech Stack
 
-- **Current State**: Basic user schema defined but authentication not yet implemented
-- **Planned Architecture**: Session-based authentication with PostgreSQL user storage
-- **Security**: Password hashing and session management ready for implementation
+- **Frontend:** React + KendoReact
+- **Backend:** Express.js
+- **AI Engine:** Google Gemini API
+- **Hosting:** Render
 
-## External Dependencies
+---
 
-### AI Integration
+## 🎨 KendoReact Components Used
 
-- **Google Gemini AI**: Core resume analysis engine using the @google/genai SDK
-- **Model**: Gemini-2.5-pro for advanced text analysis and structured JSON responses
-- **API Management**: Server-side API calls to protect API keys from client exposure
+💠 Buttons • Icons • Animations • ProgressBar • Notifications • Typography • TextArea • Tabs • Badges • Card • Inputs
 
-### Document Processing
+---
 
-- **PDF Parsing**: pdf-parse library for extracting text from PDF files
-- **DOCX Processing**: mammoth library for Microsoft Word document parsing
-- **File Validation**: Multer with MIME type filtering for security
+## ⚡ Quick Start (Run Locally)
 
-### UI Libraries
+Set up Screenly on your machine in **5 minutes**:
 
-- **Component Library**: Kendoreact Free components & Shadcn
-- **Icons**: Kendoreact icons & Font-awesome
-- **Styling**: Tailwind CSS with clsx and tailwind-merge for conditional styling
-- **Fonts**: Google Fonts integration (Inter, DM Sans, Fira Code, Geist Mono)
+```bash
+# 1️⃣ Clone the repo
+git clone https://github.com/saifiimuhammad/screenly.git
+cd screenly
 
-### Development Tools
+# 2️⃣ Install dependencies
+npm install
+```
 
-- **Build Tool**: Vite with React plugin and TypeScript support
-- **Type Safety**: Zod schemas for runtime validation and type inference
-- **Code Quality**: TypeScript strict mode with comprehensive type checking
-- **Environment**: Replit-specific plugins for development environment integration
+✏️ **Config tweak:** Update server binding in `/server/index.ts`
 
-### Database and ORM (Not yet implemented)
+```ts
+// Change this:
+server.listen(port, "0.0.0.0", () => {
+  console.log("Server running on http://0.0.0.0:5000");
+});
 
-- **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Connection**: @neondatabase/serverless for cloud PostgreSQL connectivity
-- **Schema Management**: Type-safe schema definitions with Zod integration
+// To this:
+server.listen(port, "localhost", () => {
+  console.log("Server running on http://localhost:5000");
+});
+```
+
+```bash
+# 3️⃣ Add your environment variables
+# Create a .env file inside /server
+GEMINI_API_KEY=your_google_gemini_api_key
+
+# 4️⃣ Run the dev server (from project root)
+npm run dev
+
+# 5️⃣ Open in browser
+http://localhost:5000
+```
+
+---
+
+## 🤖 AI-Assisted Build
+
+This project was built **faster, smarter, cleaner** with AI tools:
+
+- 🧪 **ChatGPT** → research & brainstorming
+- 🚧 **Replit** → created MVP 7 wireframe
+- ⚡ **GitHub Copilot** → faster component integration with KendoReact
+- 🎨 Iterated design → **production-ready UI without the fluff**
+
+---
+
+## 🔗 Links
+
+- 📂 **GitHub Repo:** [github.com/saifiimuhammad/screenly](https://github.com/saifiimuhammad/screenly)
+- 🌐 **Live Demo:** [screenly.ai](https://ai-resume-analyzer-na44.onrender.com/)
+
+---
+
+🔥 **Screenly helps job seekers land interviews & recruiters save time.**  
+If you vibe with it → smash that ⭐ on the repo!
