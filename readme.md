@@ -38,7 +38,7 @@ The backend uses a modular architecture with separate layers for routing, busine
 
 The storage layer is designed with interfaces to allow seamless transition from in-memory storage to PostgreSQL when needed.
 
-## Authentication and Authorization
+## Authentication and Authorization (Not yet implemented)
 
 - **Current State**: Basic user schema defined but authentication not yet implemented
 - **Planned Architecture**: Session-based authentication with PostgreSQL user storage
