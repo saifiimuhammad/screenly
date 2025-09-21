@@ -2,7 +2,8 @@ import { GoogleGenAI } from "@google/genai";
 import { type ResumeAnalysisResult } from "@shared/schema";
 
 const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey:
+    process.env.GEMINI_API_KEY || "AIzaSyAjD5pXB_rvRO3WeICvFYDJoWujA_-vdfM",
 });
 
 export async function analyzeResumeWithGemini(
@@ -176,7 +177,7 @@ Respond with valid JSON matching this exact schema:
     }
 
     const data: ResumeAnalysisResult = JSON.parse(rawJson);
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error("Gemini analysis error:", error);
